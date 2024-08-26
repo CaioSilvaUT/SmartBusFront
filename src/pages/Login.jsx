@@ -1,5 +1,5 @@
 import {Link} from 'react-router-dom'
-import logo from '../assets/logoLogin.jpg'
+import logo from '../assets/bus-stop.png'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
