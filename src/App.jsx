@@ -7,6 +7,7 @@ import Cadastro from './pages/Cadastro';
 import CriarCarteirinha from './pages/CriarCarteirinha';
 import VerCarteirinha from './pages/VerCarteirinha';
 import Creditos from './pages/Creditos';
+import VerHorarios from './pages/VerHorarios';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,7 @@ const router = createBrowserRouter([
       { path: '/criarcarteirinha', element: <CriarCarteirinha /> },
       { path: '/vercarteirinha', element: <VerCarteirinha /> },
       { path: '/creditos', element: <Creditos /> },
+      { path: '/verhorarios', element: <VerHorarios /> },
     ],
   },
 ]);
