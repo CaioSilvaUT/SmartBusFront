@@ -1,3 +1,5 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
 import "./Home.css";
 import olho_icon from "../assets/olho-icon.png";
 import historico_icon from "../assets/historico-icon.png";
@@ -12,7 +14,9 @@ const Home = () => {
           <p className="amount">0,00</p>
         </div>
         <div className="buttons">
-          <button>Visualizar cartão</button>
+          <Link to="/criarcarteirinha">
+            <button>Visualizar cartão</button>
+          </Link>
         </div>
       </section>
       <section className="functions">
