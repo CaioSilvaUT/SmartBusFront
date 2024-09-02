@@ -1,0 +1,66 @@
+.carteirinha {
+    display: flex;
+    align-items: flex-start;
+    gap: 100px; 
+    background-color: #538C63;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    max-width: 900px; /* Ajusta a largura máxima */
+    margin: 40px auto;
+  }
+  
+  .perfil {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 250px; 
+  }
+  
+  .perfil .icone img {
+    border-radius: 50%;
+    width: 120px;
+    height: 120px;
+    margin-bottom: 20px; 
+  }
+  
+  .nome-icon {
+    font-size: 24px; 
+    font-weight: bold;
+    color: #538C63;
+  }
+  
+  .dados {
+    display: flex;
+    flex-direction: column;
+    gap: 20px; 
+    width: 100%;
+  }
+  
+  .dados > div {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .dados p {
+    margin: 0;
+    font-weight: bold;
+    color: #538C63;
+  }
+  
+  .dados div {
+    color: #333;
+    font-size: 18px;
+    font-weight: 500;
+  }
+  
