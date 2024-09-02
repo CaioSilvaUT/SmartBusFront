@@ -1,0 +1,95 @@
+body {
+    background-color: #538C63;
+    margin: 0;
+    padding: 0;
+  }
+  
+.home {
+   display: flex;
+   align-items: center;
+   flex-direction: column;
+   font-size: 20px;
+}
+  
+.home .infos{
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    gap: 30px;
+    margin: 5rem;
+}
+
+.home .infos .saldo{
+    display: flex;
+    flex-direction: row;;
+    color: white;
+    font-weight: 600;
+}
+
+.home .infos .buttons {
+    display: flex; /* Certifique-se de que os botões são exibidos lado a lado */
+    gap: 10px; /* Espaço entre os botões */
+  }
+  
+  .home .infos .buttons button {
+    background-color: white;
+    border-radius: 50px;
+    padding: 10px 20px;
+    font-weight: 600;
+    transition: background-color 0.3s, color 0.3s, transform 0.3s; /* Adiciona transições suaves */
+}
+
+.home .infos .buttons button:hover {
+    background-color: #538C63;
+    color: white;
+    transform: scale(1.1);
+}
+
+.home .functions{
+    background-image: url(../assets/home-background.png);
+    width: 100%;
+    height: 38rem;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.home .functions .box{
+    display: flex;
+    align-items: row;
+    gap: 10px;
+    margin-right: 10%;
+}
+
+.home .functions .visualizar_horarios{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 40px;
+    gap: 100px;
+    border-radius: 20px;
+    padding: 30px;
+    transition: transform 0.3s;
+}
+
+.home .functions .visualizar_horarios:hover{
+    transform: scale(1.05);
+}
+
+.home .functions .visualizar_historico{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+    border: 40px;
+    gap: 100px;
+    border-radius: 20px;
+    padding: 30px;
+    transition: transform 0.3s;
+
+}
+
+.home .functions .visualizar_historico:hover{
+    transform: scale(1.05);
+}
