@@ -10,12 +10,10 @@ import HomePage from './pages/HomePage';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
-import CriarCarteirinha from './pages/CriarCarteirinha';
-import VerCarteirinha from './pages/VerCarteirinha';
-import Creditos from './pages/Creditos';
 import Creditos from './pages/Creditos';
 import VerHorarios from './pages/VerHorarios';
 import Perfil from './pages/Perfil';
+import Cartao from './pages/Cartao';
 
 const router = createBrowserRouter([
   {
@@ -28,10 +26,9 @@ const router = createBrowserRouter([
       {path: '', element: <PrivateRoute />, children: [
       { path: '/', element: <Home /> },
       { path: '/perfil', element: <Perfil />},
-      { path: '/criarcarteirinha', element: <CriarCarteirinha /> },
-      { path: '/vercarteirinha', element: <VerCarteirinha /> },
       { path: '/creditos', element: <Creditos /> },
       { path: '/verhorarios', element: <VerHorarios /> },
+      { path: '/cartao', element: <Cartao />},
       ]},
     ],
   },
