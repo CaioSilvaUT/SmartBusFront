@@ -25,7 +25,9 @@ const Home = () => {
             <div className="icon-placeholder">
               <img src={olho_icon} alt="Ícone para Visualizar Horários" />
             </div>
-            <p>Visualizar horários</p>
+            <Link to="/verhorarios"> 
+              <p>Visualizar horários</p> 
+            </Link>
           </div>
           <div className="visualizar_historico">
             <div className="icon-placeholder">
