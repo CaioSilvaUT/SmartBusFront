@@ -14,7 +14,7 @@ const Home = () => {
           <p className="amount">0,00</p>
         </div>
         <div className="buttons">
-          <Link to="/criarcarteirinha">
+          <Link to="/cartao">
             <button>Visualizar cartão</button>
           </Link>
         </div>

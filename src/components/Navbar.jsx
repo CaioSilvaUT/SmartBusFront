@@ -56,17 +56,17 @@ const Navbar = () => {
             {userInfo ? (
               <>
                 <NavLink to="/" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Home</NavLink>
-                <NavLink to="#" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Linhas</NavLink>
+                <NavLink to="/VerHorarios" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Linhas</NavLink>
 
                 <div className="relative inline-block">
-                  <button
+                  <NavLink to="#"
                     onMouseEnter={handleDropdown}
                     className="text-white font-semibold hover:text-green-300 focus:outline-none px-2">
                     Conta
                     <svg className="inline-block w-4 h-4 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
                     </svg>
-                  </button>
+                  </NavLink>
                  
                   {dropdown && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
@@ -75,7 +75,7 @@ const Navbar = () => {
                       <div className="font-medium truncate">{resData.email}</div>
                     </div>
                       <NavLink to="/perfil" className="block px-4 py-2 text-black hover:bg-gray-200">Perfil</NavLink>
-                      <NavLink to="#" className="block px-4 py-2 text-black hover:bg-gray-200">Cartão</NavLink>
+                      <NavLink to="/vercarteirinha" className="block px-4 py-2 text-black hover:bg-gray-200">Cartão</NavLink>
                       <NavLink to="#" className="block px-4 py-2 text-black hover:bg-gray-200">Histórico</NavLink>
                       <button
                         onClick={logoutHandle}
