@@ -10,7 +10,6 @@ import HomePage from './pages/HomePage';
 import MainLayout from './layouts/MainLayout';
 import Login from './pages/Login';
 import Cadastro from './pages/Cadastro';
-import Creditos from './pages/Creditos';
 import VerHorarios from './pages/VerHorarios';
 import Perfil from './pages/Perfil';
 import Cartao from './pages/Cartao';
@@ -20,13 +19,12 @@ const router = createBrowserRouter([
     path: '/',
     element: <MainLayout />,
     children: [
-      { path: '/home', element: <HomePage /> },
+      { path: '/', element: <HomePage /> },
       { path: '/login', element: <Login /> },
       { path: '/cadastro', element: <Cadastro /> },
       {path: '', element: <PrivateRoute />, children: [
-      { path: '/', element: <Home /> },
+      { path: '/home', element: <Home /> },
       { path: '/perfil', element: <Perfil />},
-      { path: '/creditos', element: <Creditos /> },
       { path: '/verhorarios', element: <VerHorarios /> },
       { path: '/cartao', element: <Cartao />},
       ]},

@@ -70,6 +70,7 @@ const VisualizarCartao = () => {
 
   return (
     <>
+    <div className="bg-green-200">
     <div className="shadow-lg bg-green-300 h-screen flex items-center justify-center border-8 border-green-200 rounded-3xl">
     <div className="bg-green-400 h-auto flex items-start justify-center border-8 border-green-200 rounded p-8 w-full max-w-4xl shadow-lg">
     <div className="w-3/5">
@@ -84,7 +85,7 @@ const VisualizarCartao = () => {
       <div className="flex flex-col items-start">
       <button 
         onClick={() => setRenovar(true)}
-        className="bg-green-100 text-gray-700 font-semibold font-inter py-2 px-4 rounded-md shadow-md w-full max-w-44 mt-24 mb-3 hover:bg-green-300 transition duration-300">
+        className="bg-green-100 text-gray-700 font-semibold font-inter py-2 px-4 rounded-md shadow-md w-full max-w-44 mt-20 mb-3 hover:bg-green-300 transition duration-300">
         Renovar Cartão
       </button>
       <button 
@@ -127,6 +128,7 @@ const VisualizarCartao = () => {
         </div>
       </div>
       </div>
+    </div>
     </div>
 
     {depositar && (
