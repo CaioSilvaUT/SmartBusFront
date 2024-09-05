@@ -56,6 +56,7 @@ const CriarCartao = () => {
 
   return (
     <>
+    <div className="bg-green-200">
     <div className="shadow-lg bg-green-300 h-screen flex items-center justify-center border-8 border-green-200 rounded-3xl relative">
   <div className="bg-green-400 h-auto flex items-start justify-center border-8 border-green-200 rounded p-8 w-full max-w-4xl shadow-lg relative z-10">
     <div className="w-3/5">
@@ -118,7 +119,7 @@ const CriarCartao = () => {
         onChange={(e) => setTipo(e.target.value)}
         required  
       >
-        <option value="" defaultValue disabled hidden>
+        <option value="" defaultValue hidden>
           Selecionar Opção
         </option>
         <option value="Usuário">Usuário</option>
@@ -128,7 +129,7 @@ const CriarCartao = () => {
       </select>
     </div>
     <p className="text-white font-normal font-inter text-2xl drop-shadow-md">
-      Adicone um valor: *
+      Adicione um valor: *
     </p>
     <p className="text-gray-300 font-normal font-inter text-sm italic mb-4 drop-shadow-md">
       * Se não quiser depositar o valor por enquanto, insira "0" no campo abaixo
@@ -148,6 +149,7 @@ const CriarCartao = () => {
     </button>
     </form>
   </div>
+</div>
 </div>
 </div>
 

@@ -89,6 +89,7 @@ const Perfil = () => {
 
   return (
     <>
+    <div className="bg-green-200">
     <div className="bg-green-200 h-screen flex items-center justify-center">
   <div className="bg-beige-100 h-auto flex items-start justify-center border-8 border-green-400 rounded p-8 w-full max-w-5xl shadow-lg">
     <div className="flex flex-col w-3/5 p-8 items-center justify-start border-r-4 border-green-400">
@@ -99,7 +100,7 @@ const Perfil = () => {
 
         {isEditing ? (
             <>
-            <form className="w-full mb-8">
+            <form onSubmit={handleSubmit} className="w-full mb-8">
         <div className="w-full mb-4">
         <label htmlFor="nome" className="block text-green-800 font-inter font-bold mb-2">Nome</label>
           <input
@@ -152,9 +153,9 @@ const Perfil = () => {
           />
         </div>
         <div className="flex justify-between items-center">
-        <Link to='#' className="bg-trasnparent font-bold font-inter border-2 border-green-400 text-green-400 py-2 px-6 rounded-lg hover:text-white transition duration-300 hover:bg-green-400"
-        onClick={handleSubmit}>Salvar Alterações
-        </Link>
+        <button type="submit" className="bg-trasnparent font-bold font-inter border-2 border-green-400 text-green-400 py-2 px-6 rounded-lg hover:text-white transition duration-300 hover:bg-green-400"
+        >Salvar Alterações
+        </button>
         <Link to='#' className="bg-trasnparent font-bold font-inter border-2 border-red-500 text-red-500 py-2 px-6 rounded-lg hover:text-white transition duration-300 hover:bg-red-500"
         onClick={handleButton}>
             Excluir Conta
@@ -245,7 +246,7 @@ const Perfil = () => {
         )}
 
     <div className="flex flex-col w-2/5 p-8 space-y-6">
-      <Link to='#' className="bg-white p-6 rounded-lg shadow-md border-2 border-green-400 hover:bg-beige-200 transition duration-300">
+      <Link to='/cartao' className="bg-white p-6 rounded-lg shadow-md border-2 border-green-400 hover:bg-beige-200 transition duration-300">
         <h2 className="text-green-400 font-inter font-bold text-lg mb-2">Meu Cartão</h2>
         <p className="font-inter text-grey mb-2">Confira seu saldo</p>
         <span className="link-text block text-green-400 font-semibold font-inter leading-tight mt-auto transition-colors duration-300 ease-in-out">Clique para acessar
@@ -265,7 +266,7 @@ const Perfil = () => {
         </span>
       </Link>
 
-      
+      </div>
     </div>
   </div>
 </div>

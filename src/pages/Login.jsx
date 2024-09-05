@@ -24,7 +24,7 @@ const Login = () => {
 
     useEffect(() => {
         if (userInfo) {
-          navigate('/');
+          navigate('/home');
         }
       }, [navigate, userInfo]);
     
@@ -36,7 +36,7 @@ const Login = () => {
                 senha: senha,
             })
             dispatch(setCredentials({...res}))
-            navigate('/')
+            navigate('/home')
         } catch (error){
             console.log(error)
             if(error.status == 401){

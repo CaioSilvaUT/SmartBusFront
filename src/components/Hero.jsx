@@ -22,7 +22,7 @@ const Hero = () => {
     <div className="flex space-x-4 justify-center">
         <Link to='/cadastro' 
         className="bg-transparent text-white text-lg py-2 px-4 rounded-lg font-semibold font-inter border-2 border-beige-200 hover:bg-beige-200 hover:text-green-400 transition duration-300">Junte-se a nós</Link>
-            <Link to='/linhas-onibus'
+            <Link to='/VerHorarios'
             id="linhas" 
             name="linhas"  
             className="bg-transparent text-white text-lg py-2 px-4 rounded-lg font-semibold font-inter border-2 border-beige-200 hover:bg-beige-200 hover:text-green-400 transition duration-300">Visualizar Linhas</Link>

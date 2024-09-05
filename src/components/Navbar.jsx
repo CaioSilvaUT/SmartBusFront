@@ -4,6 +4,7 @@ import { useLogoutMutation } from '../auth/usersApiSlice';
 import { logout } from '../auth/authSlice';
 import { useState } from 'react';
 import { useEffect } from 'react'
+import bus_stop from '../assets/bus-stop.png'
 import axios from 'axios';
 
 const Navbar = () => { 
@@ -43,21 +44,39 @@ const Navbar = () => {
 
   return (
     <>
-      <nav className="bg-green-200 p-4">
-        <div className="font-inter container mx-auto flex justify-between items-center">
-          <div className="flex items-center">
-            {userInfo ? (
-              <NavLink to="/" className="text-white text-xl font-bold">SmartBus</NavLink>
+      <nav className="bg-gradient-to-r from-green-400 to-green-200 p-4 h-16">
+      <div className="font-inter container mx-auto flex justify-between items-center h-full">
+        <div className="flex items-center">
+          {userInfo ? (
+            <>
+              <img
+                src={bus_stop}
+                alt="Ícone para Visualizar Horários"
+                className="h-8 w-8 mr-2"
+              />
+              <NavLink to="/home" className="text-white text-xl italic font-bold">SmartBus</NavLink>
+            </>
             ) : (
-              <NavLink to="/home" className="text-white text-xl font-bold">SmartBus</NavLink>
+              <>
+              <img
+                src={bus_stop}
+                alt="Ícone para Visualizar Horários"
+                className="h-8 w-8 mr-2"
+              />
+              <NavLink to="/" className="text-white text-xl italic font-bold">SmartBus</NavLink>
+              </>
             )}
           </div>
           <div className="space-x-4">
             {userInfo ? (
               <>
-                <NavLink to="/" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Home</NavLink>
-                <NavLink to="/VerHorarios" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Linhas</NavLink>
-
+                <NavLink to="/home" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Home</NavLink>
+                <span className="border-l border-white h-6"></span>
+                <NavLink to="/VerHorarios" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Horários</NavLink>
+                <NavLink to="/cartao" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Cartão</NavLink>
+                <NavLink to="/historico" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Histórico</NavLink>
+                <span className="border-l border-white h-6"></span>
+                
                 <div className="relative inline-block">
                   <NavLink to="#"
                     onMouseEnter={handleDropdown}
@@ -75,8 +94,6 @@ const Navbar = () => {
                       <div className="font-medium truncate">{resData.email}</div>
                     </div>
                       <NavLink to="/perfil" className="block px-4 py-2 text-black hover:bg-gray-200">Perfil</NavLink>
-                      <NavLink to="/vercarteirinha" className="block px-4 py-2 text-black hover:bg-gray-200">Cartão</NavLink>
-                      <NavLink to="#" className="block px-4 py-2 text-black hover:bg-gray-200">Histórico</NavLink>
                       <button
                         onClick={logoutHandle}
                         className="block w-full text-left px-4 py-2 text-black hover:bg-gray-200">Sair
@@ -87,7 +104,8 @@ const Navbar = () => {
               </>
             ) : (
               <>
-                <NavLink to="/home" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Home</NavLink>
+                <NavLink to="/" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Home</NavLink>
+                <span className="border-l border-white h-6"></span>
                 <NavLink to="/login" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Login</NavLink>
               </>
             )}
