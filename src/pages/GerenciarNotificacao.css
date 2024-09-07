@@ -1,0 +1,88 @@
+.notificacoes-cartao h1 {
+  font-size: 32px;
+  font-weight: bold;
+  color: #1c522b;
+  text-align: center;
+  margin-bottom: 40px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid #538c63;
+  width: 100%;
+  max-width: 600px;
+  margin: 0 auto 40px auto;
+}
+
+.lista-notificacoes {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background-color: #538c63;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 900px;
+  margin: 40px auto;
+  width: 100%;
+}
+
+.notificacao {
+  display: flex;
+  align-items: flex-start;
+  gap: 20px;
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+}
+
+.notificacao .detalhes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  flex-grow: 1;
+}
+
+.notificacao .detalhes p {
+  margin: 0;
+  font-weight: bold;
+  color: #538c63;
+}
+
+.notificacao .acoes {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.btn-aceitar,
+.btn-recusar {
+  padding: 10px 15px;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+  text-align: center;
+  width: 120px;
+}
+
+.btn-aceitar {
+  background-color: #1c522b;
+  color: #fff;
+  border: none;
+}
+
+.btn-aceitar:hover {
+  background-color: #538c63;
+  transform: scale(1.02);
+}
+
+.btn-recusar {
+  background-color: #cc0000;
+  color: #fff;
+  border: none;
+}
+
+.btn-recusar:hover {
+  background-color: #e60000;
+  transform: scale(1.02);
+}

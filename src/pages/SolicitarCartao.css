@@ -1,0 +1,69 @@
+.solicitar-cartao {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  font-size: 20px;
+  padding: 2rem;
+  background-color: #538c63;
+  min-height: 100vh;
+}
+
+.solicitar-cartao h2 {
+  color: black;
+  font-weight: 600;
+  font-size: 36px;
+  margin-bottom: 2rem;
+}
+
+.solicitar-cartao .formulario {
+  background-color: #ffffff;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+}
+
+.solicitar-cartao .campo {
+  margin-bottom: 1.5rem;
+}
+
+.solicitar-cartao .campo label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-size: 18px;
+  color: #333;
+}
+
+.solicitar-cartao .campo input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+  transition: border-color 0.2s;
+}
+
+.solicitar-cartao .campo input[type="file"]:focus {
+  border-color: #538c63;
+  outline: none;
+}
+
+.solicitar-cartao .btn-solicitar {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #1c522b;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.3s;
+}
+
+.solicitar-cartao .btn-solicitar:hover {
+  background-color: #538c63;
+  transform: scale(1.02);
+}
