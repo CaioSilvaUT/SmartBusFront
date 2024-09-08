@@ -1,58 +1,95 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
 import "./GerenciarNotificacao.css";
 
-const GerenciarNotificacao = () => {
-  // Exemplo de dados de notificações
-  const [notificacoes, setNotificacoes] = useState([
-    { id: 1, nome: "Usuário 1", tipo: "Idoso" },
-    { id: 2, nome: "Usuário 2", tipo: "Estudante" },
-    { id: 3, nome: "Usuário 3", tipo: "Comum" },
-    // Adicione mais notificações conforme necessário
-  ]);
+const GerenciarNotificacao = ({ idNotificacao, idUser }) => {
+  const [notificacao, setNotificacao] = useState(null);
+  const [notificacoes, setNotificacoes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const handleAceitar = (id) => {
-    console.log(`Notificação ${id} aceita`);
-    // Lógica para aceitar a notificação
+  // Função para buscar notificação por ID
+  const fetchNotificacaoById = async (id) => {
+    try {
+      const response = await axios.get(`/getByIdNotificacao/${id}`);
+      setNotificacao(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
   };
 
-  const handleRecusar = (id) => {
-    console.log(`Notificação ${id} recusada`);
-    // Lógica para recusar a notificação
+  // Função para buscar notificações por idUser
+  const fetchNotificacoesByUserId = async (idUser) => {
+    try {
+      const response = await axios.get(`/getNotificacaoByUserId/${idUser}`);
+      setNotificacoes(response.data);
+      setLoading(false);
+    } catch (err) {
+      setError(err.message);
+      setLoading(false);
+    }
   };
 
-  return (
-    <div className="notificacoes-cartao">
-      <section className="lista-notificacoes">
-        <h1>Notificações de Geração de Cartão</h1>
-        {notificacoes.map((notificacao) => (
-          <div key={notificacao.id} className="notificacao">
-            <div className="detalhes">
-              <p>
-                <strong>Nome:</strong> {notificacao.nome}
-              </p>
-              <p>
-                <strong>Tipo de Cartão:</strong> {notificacao.tipo}
-              </p>
-            </div>
-            <div className="acoes">
-              <button
-                onClick={() => handleAceitar(notificacao.id)}
-                className="btn-aceitar"
-              >
-                Aceitar
-              </button>
-              <button
-                onClick={() => handleRecusar(notificacao.id)}
-                className="btn-recusar"
-              >
-                Recusar
-              </button>
-            </div>
+  // Carrega notificações baseado no idNotificacao ou idUser
+  useEffect(() => {
+    if (idNotificacao) {
+      fetchNotificacaoById(idNotificacao);
+    } else if (idUser) {
+      fetchNotificacoesByUserId(idUser);
+    }
+  }, [idNotificacao, idUser]);
+
+  if (loading) {
+    return <div>Carregando...</div>;
+  }
+
+  if (error) {
+    return <div>Erro: {error}</div>;
+  }
+
+  // Renderiza uma notificação específica
+  if (idNotificacao && notificacao) {
+    return (
+      <div className="notificacao-detalhe">
+        <h1>Detalhes da Notificação</h1>
+        <p>
+          <strong>ID:</strong> {notificacao.id}
+        </p>
+        <p>
+          <strong>Mensagem:</strong> {notificacao.mensagem}
+        </p>
+        <p>
+          <strong>Status:</strong> {notificacao.status}
+        </p>
+      </div>
+    );
+  }
+
+  // Renderiza notificações do usuário
+  if (idUser && notificacoes.length > 0) {
+    return (
+      <div className="lista-notificacoes">
+        <h1>Notificações do Usuário</h1>
+        {notificacoes.map((notif) => (
+          <div key={notif.id} className="notificacao">
+            <p>
+              <strong>ID:</strong> {notif.id}
+            </p>
+            <p>
+              <strong>Mensagem:</strong> {notif.mensagem}
+            </p>
+            <p>
+              <strong>Status:</strong> {notif.status}
+            </p>
           </div>
         ))}
-      </section>
-    </div>
-  );
+      </div>
+    );
+  }
+
+  return <div>Não há notificações para exibir.</div>;
 };
 
 export default GerenciarNotificacao;
