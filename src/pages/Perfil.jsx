@@ -18,7 +18,7 @@ const Perfil = () => {
     const { userInfo } = useSelector((state) => state.auth)
     
     useEffect( () => { // mostra as infos do usuário
-      axios.get(`http://localhost:3000/showUserId/${userInfo.data.id}`, {
+      axios.get(`http://localhost:3000/Controllers/showUserId/${userInfo.data.id}`, {
         params: {
           id: userInfo.data.id
         }
@@ -47,7 +47,7 @@ const Perfil = () => {
     }
 
     const handleDelete = async () => { // deleta a conta
-      axios.delete(`http://localhost:3000/deleteUser/${userInfo.data.id}`, {
+      axios.delete(`http://localhost:3000/Controllers/deleteUser/${userInfo.data.id}`, {
         params: {
           id: userInfo.data.id
         }
@@ -62,7 +62,7 @@ const Perfil = () => {
 
     const logoutHandle = async () => { // sai após deletar a conta
       try {
-        await axios.post("http://localhost:3000/logout");
+        await axios.post("http://localhost:3000/Controllers/logout");
         dispatch(logout());
         navigate('/');
       } catch (err) {
@@ -72,7 +72,7 @@ const Perfil = () => {
 
     const handleSubmit = async (e) => { // edita o perfil
       e.preventDefault()
-      await axios.put(`http://localhost:3000/updateUser/${userInfo.data.id}`, {
+      await axios.put(`http://localhost:3000/Controllers/updateUser/${userInfo.data.id}`, {
           params: {
               id: userInfo.data.id
           },

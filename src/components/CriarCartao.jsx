@@ -33,7 +33,7 @@ const CriarCartao = () => {
 
     const handleSubmit = async (e) => { // cria o cartão
         e.preventDefault()
-        await axios.post("http://localhost:3000/createCartao", {
+        await axios.post("http://localhost:3000/Controllers/createCartao", {
             dataCriacao: dataCriacao(),
             dataVencimento: dataVencimento(),
             tipo: tipo,

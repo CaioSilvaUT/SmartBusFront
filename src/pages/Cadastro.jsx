@@ -16,7 +16,7 @@ const Cadastro = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await axios.post("http://localhost:3000/newUser", {
+        await axios.post("http://localhost:3000/Controllers/newUser", {
             nome: nome,
             email: email,
             telefone: telefone,

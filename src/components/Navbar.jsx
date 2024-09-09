@@ -15,7 +15,7 @@ const Navbar = () => {
   const [dropdown, setDropdown] = useState(false);
 
   const handleMessage = () => {
-    axios.get(`http://localhost:3000/showUserId/${userInfo.data.id}`, {
+    axios.get(`http://localhost:3000/Controllers/showUserId/${userInfo.data.id}`, {
       params: {
         id: userInfo.data.id
       }
@@ -29,7 +29,7 @@ const Navbar = () => {
 
   const logoutHandle = async () => {
     try {
-      await axios.post("http://localhost:3000/logout");
+      await axios.post("http://localhost:3000/Controllers/logout");
       dispatch(logout());
       navigate('/home');
     } catch (err) {
@@ -75,6 +75,7 @@ const Navbar = () => {
                 <NavLink to="/VerHorarios" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Horários</NavLink>
                 <NavLink to="/cartao" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Cartão</NavLink>
                 <NavLink to="/historico" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Histórico</NavLink>
+                <NavLink to="/avisos" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Avisos</NavLink>
                 <span className="border-l border-white h-6"></span>
                 
                 <div className="relative inline-block">
