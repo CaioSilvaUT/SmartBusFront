@@ -1,88 +1,111 @@
-import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
-import "./SolicitarCartao.css";
+import React, { useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 
-const App = () => {
-  const [file, setFile] = useState(null); // Estado para o arquivo PDF
-  const [tipo, setTipo] = useState(""); // Estado para o tipo de cartão
-  const [resData, setResData] = useState("");
-  const { userInfo } = useSelector((state) => state.auth); // Obtendo userInfo do Redux
+const SolicitarCartao = () => {
+  const [file, setFile] = useState(null);
+  const [tipo, setTipo] = useState("");
+  const [message, setMessage] = useState("");
+  const [error, setError] = useState("");
+  const { userInfo } = useSelector((state) => state.auth);
 
-  // Função para enviar o formulário
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
+
+  const handleTipoChange = (e) => {
+    setTipo(e.target.value);
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!file) {
-      alert("Por favor, selecione um arquivo PDF.");
+      setError("Nenhum arquivo selecionado.");
       return;
     }
 
     if (!tipo) {
-      alert("Por favor, selecione o tipo de cartão.");
+      setError("O tipo de cartão é obrigatório.");
       return;
     }
 
     const formData = new FormData();
     formData.append("file", file);
-    formData.append("tipo", tipo); // Adicionando o tipo de cartão
-    formData.append("idUser", userInfo.data.id);
+    formData.append("tipo", tipo);
 
-    axios
-      .post("http://localhost:3000/solicitarCartao", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        alert("Solicitação enviada com sucesso!");
-        console.log(res.data);
-      })
-      .catch((err) => {
-        console.log(err);
-        alert("Erro ao enviar a solicitação.");
-      });
+    try {
+      await axios.post(
+        `http://localhost:3000/Controllers/solicitarCartao/${userInfo.data.id}`,
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+      setMessage("Solicitação de cartão enviada com sucesso!");
+      setError("");
+      setFile(null);
+      setTipo("");
+    } catch (err) {
+      setError("Erro ao enviar a solicitação.");
+      setMessage("");
+      console.error(err);
+    }
   };
 
   return (
-    <div className="solicitar-cartao">
-      <section className="formulario">
-        <h2>Solicitar Cartão</h2>
-        <form onSubmit={handleSubmit}>
-          <div className="campo">
-            <label htmlFor="file">Upload do Arquivo (PDF):</label>
-            <input
-              type="file"
-              id="file"
-              accept=".pdf"
-              onChange={(e) => setFile(e.target.files[0])} // Atualiza o estado com o arquivo selecionado
-              required
-            />
-          </div>
-          <div className="campo">
-            <label htmlFor="tipo">Tipo de Cartão:</label>
-            <select
-              id="tipo"
-              value={tipo}
-              onChange={(e) => setTipo(e.target.value)} // Atualiza o estado com o tipo selecionado
-              required
-            >
-              <option value="">Selecione um tipo</option>
-              <option value="Estudante">Estudante</option>
-              <option value="Idoso">Idoso</option>
-              <option value="Comum">Comum</option>
-              {/* Adicione mais opções conforme necessário */}
-            </select>
-          </div>
-          <button type="submit" className="btn-solicitar">
-            Solicitar
+    <div className="shadow-lg bg-green-300 p-8 rounded-lg">
+      <h1 className="text-3xl font-bold mb-6 text-center text-white">
+        Solicitar Cartão
+      </h1>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label htmlFor="file" className="block text-white font-bold mb-2">
+            Arquivo PDF
+          </label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            className="w-full py-2 px-4 border-2 border-grey rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-green-200"
+            required
+          />
+        </div>
+        <div>
+          <label htmlFor="tipo" className="block text-white font-bold mb-2">
+            Tipo de Cartão
+          </label>
+          <select
+            id="tipo"
+            name="tipo"
+            value={tipo}
+            onChange={handleTipoChange}
+            className="w-full py-2 px-4 border-2 border-grey rounded-lg bg-transparent text-white focus:outline-none focus:ring-2 focus:ring-green-200"
+            required
+          >
+            <option value="" disabled>
+              Selecione o tipo
+            </option>
+            <option value="0">Estudante</option>
+            <option value="1">Comum</option>
+            <option value="2">Idoso</option>
+          </select>
+        </div>
+        <div className="mt-4 flex justify-center">
+          <button
+            type="submit"
+            className="bg-transparent font-bold text-white py-2 px-4 border-2 border-grey rounded-lg hover:bg-green-400 transition duration-300"
+          >
+            Enviar Solicitação
           </button>
-        </form>
-      </section>
+        </div>
+        {message && (
+          <div className="mt-4 text-green-500 text-center">{message}</div>
+        )}
+        {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+      </form>
     </div>
   );
 };
 
-export default App;
+export default SolicitarCartao;
