@@ -18,7 +18,7 @@ const VisualizarCartao = () => {
     const [valor, setValor] = useState("")
 
     useEffect( () => { // infos do cartao
-        axios.get(`http://localhost:3000/getByIdUserCartao/${userInfo.data.id}`, {
+        axios.get(`http://localhost:3000/Controllers/getByIdUserCartao/${userInfo.data.id}`, {
           params: {
             idUser: userInfo.data.id
           }
@@ -32,7 +32,7 @@ const VisualizarCartao = () => {
 
     const handleDeposit = async (e) => { // depositar valor
         e.preventDefault()
-        await axios.post(`http://localhost:3000/adicionarSaldo/${userInfo.data.id}`, {
+        await axios.post(`http://localhost:3000/Controllers/adicionarSaldo/${userInfo.data.id}`, {
             params: {
                 idUser: userInfo.data.id
             },
@@ -50,7 +50,7 @@ const VisualizarCartao = () => {
     }
 
     useEffect( () => { // mostra as infos do usuário
-        axios.get(`http://localhost:3000/showUserId/${userInfo.data.id}`, {
+        axios.get(`http://localhost:3000/Controllers/showUserId/${userInfo.data.id}`, {
           params: {
             id: userInfo.data.id
           }

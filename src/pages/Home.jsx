@@ -13,7 +13,7 @@ const Home = () => {
   const { userInfo } = useSelector((state) => state.auth)
 
   useEffect( () => { 
-    axios.get(`http://localhost:3000/getByIdUserCartao/${userInfo.data.id}`, {
+    axios.get(`http://localhost:3000/Controllers/getByIdUserCartao/${userInfo.data.id}`, {
       params: {
         idUser: userInfo.data.id
       }
@@ -26,7 +26,7 @@ const Home = () => {
   }, [userInfo.data.id])
 
   useEffect( () => { 
-    axios.get(`http://localhost:3000/showUserId/${userInfo.data.id}`, {
+    axios.get(`http://localhost:3000/Controllers/showUserId/${userInfo.data.id}`, {
       params: {
         id: userInfo.data.id
       }

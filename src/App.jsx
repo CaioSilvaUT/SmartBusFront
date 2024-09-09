@@ -13,6 +13,7 @@ import Cadastro from './pages/Cadastro';
 import VerHorarios from './pages/VerHorarios';
 import Perfil from './pages/Perfil';
 import Cartao from './pages/Cartao';
+import ListarNotificacoes from './pages/ListarNotificacoes'
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,7 @@ const router = createBrowserRouter([
       { path: '/perfil', element: <Perfil />},
       { path: '/verhorarios', element: <VerHorarios /> },
       { path: '/cartao', element: <Cartao />},
+      { path: '/avisos', element: <ListarNotificacoes />},
       ]},
     ],
   },
