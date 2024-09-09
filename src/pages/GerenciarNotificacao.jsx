@@ -43,7 +43,6 @@ const GerenciarNotificacoes = () => {
         idUser: userInfo.data.id,
         texto,
         dataHora: formattedDataHora, // Envia a dataHora gerada
-        isRead: false,
       });
       setTexto("");
       fetchNotificacoes(); // Atualiza a lista de notificações
