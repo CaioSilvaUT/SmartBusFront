@@ -1,95 +1,73 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "./GerenciarNotificacao.css";
+import { useSelector } from "react-redux";
 
-const GerenciarNotificacao = ({ idNotificacao, idUser }) => {
-  const [notificacao, setNotificacao] = useState(null);
+const GerenciarNotificacao = () => {
   const [notificacoes, setNotificacoes] = useState([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const { userInfo } = useSelector((state) => state.auth);
 
-  // Função para buscar notificação por ID
-  const fetchNotificacaoById = async (id) => {
-    try {
-      const response = await axios.get(`/getByIdNotificacao/${id}`);
-      setNotificacao(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  // Função para buscar notificações por idUser
-  const fetchNotificacoesByUserId = async (idUser) => {
-    try {
-      const response = await axios.get(`/getNotificacaoByUserId/${idUser}`);
-      setNotificacoes(response.data);
-      setLoading(false);
-    } catch (err) {
-      setError(err.message);
-      setLoading(false);
-    }
-  };
-
-  // Carrega notificações baseado no idNotificacao ou idUser
   useEffect(() => {
-    if (idNotificacao) {
-      fetchNotificacaoById(idNotificacao);
-    } else if (idUser) {
-      fetchNotificacoesByUserId(idUser);
-    }
-  }, [idNotificacao, idUser]);
+    const fetchNotificacoes = async () => {
+      try {
+        const response = await axios.get(
+          `/getNotificacaoByUserId/${userInfo.data.id}`
+        );
 
-  if (loading) {
-    return <div>Carregando...</div>;
-  }
+        // Verificar se a resposta é um array
+        if (Array.isArray(response.data)) {
+          setNotificacoes(response.data);
+        } else {
+          // Ajuste conforme necessário se a resposta for um objeto
+          console.error("Resposta inesperada da API:", response.data);
+          setError("");
+        }
+      } catch (err) {
+        console.error("Erro ao buscar notificações:", err);
+        setError("Erro ao buscar notificações.");
+      }
+    };
 
-  if (error) {
-    return <div>Erro: {error}</div>;
-  }
+    fetchNotificacoes();
+  }, [userInfo.data.id]);
 
-  // Renderiza uma notificação específica
-  if (idNotificacao && notificacao) {
-    return (
-      <div className="notificacao-detalhe">
-        <h1>Detalhes da Notificação</h1>
-        <p>
-          <strong>ID:</strong> {notificacao.id}
-        </p>
-        <p>
-          <strong>Mensagem:</strong> {notificacao.mensagem}
-        </p>
-        <p>
-          <strong>Status:</strong> {notificacao.status}
-        </p>
+  return (
+    <div className="bg-green-200 min-h-screen flex items-center justify-center">
+      <div className="shadow-lg bg-green-300 w-full max-w-4xl p-8 rounded-lg border-8 border-green-200">
+        <h1 className="text-white text-3xl font-inter font-extrabold mb-6 drop-shadow-sm text-center">
+          Gerenciar Notificações
+        </h1>
+        {error && <p className="text-red-500 text-center">{error}</p>}
+        <div className="bg-green-100 bg-opacity-60 p-6 rounded-lg">
+          {notificacoes.length === 0 ? (
+            <p className="text-gray-800 text-center">
+              Nenhuma notificação encontrada.
+            </p>
+          ) : (
+            <table className="w-full bg-white rounded-lg shadow-md">
+              <thead>
+                <tr className="bg-green-400 text-white">
+                  <th className="p-4">ID</th>
+                  <th className="p-4">Mensagem</th>
+                  <th className="p-4">Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                {Array.isArray(notificacoes) &&
+                  notificacoes.map((notif) => (
+                    <tr key={notif.id}>
+                      <td className="p-4">{notif.id}</td>
+                      <td className="p-4">{notif.mensagem}</td>
+                      <td className="p-4">{notif.status}</td>
+                    </tr>
+                  ))}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
-    );
-  }
-
-  // Renderiza notificações do usuário
-  if (idUser && notificacoes.length > 0) {
-    return (
-      <div className="lista-notificacoes">
-        <h1>Notificações do Usuário</h1>
-        {notificacoes.map((notif) => (
-          <div key={notif.id} className="notificacao">
-            <p>
-              <strong>ID:</strong> {notif.id}
-            </p>
-            <p>
-              <strong>Mensagem:</strong> {notif.mensagem}
-            </p>
-            <p>
-              <strong>Status:</strong> {notif.status}
-            </p>
-          </div>
-        ))}
-      </div>
-    );
-  }
-
-  return <div>Não há notificações para exibir.</div>;
+    </div>
+  );
 };
 
 export default GerenciarNotificacao;
