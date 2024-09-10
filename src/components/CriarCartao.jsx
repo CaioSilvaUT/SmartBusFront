@@ -8,12 +8,15 @@ import axios from "axios";
 const CriarCartao = () => {
     const [resData, setResData] = useState("")
     const { userInfo } = useSelector((state) => state.auth)
+    const [file, setFile] = useState(null);
+    const [tipo, setTipo] = useState("");
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState("");
 
     const [pagamento, setPagamento] = useState("")
     const [depositar, setDepositar] = useState(false)
 
     const [valor, setValor] = useState("")
-    const [tipo, setTipo] = useState("")
 
     function dataCriacao() {
         const today = new Date();
@@ -31,7 +34,48 @@ const CriarCartao = () => {
         return `${date}/${month}/${year}`;
     }
 
-    const handleSubmit = async (e) => { // cria o cartão
+    const handleFileChange = (e) => {
+      setFile(e.target.files[0]);
+    };
+  
+    const handleTipoChange = (e) => {
+      setTipo(e.target.value);
+    };
+  
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+  
+      if (!file) {
+        setError("Nenhum arquivo selecionado.");
+        return;
+      }
+  
+      if (!tipo) {
+        setError("O tipo de cartão é obrigatório.");
+        return;
+      }
+  
+      const formData = new FormData();
+      formData.append("file", file);
+      formData.append("tipo", tipo);
+  
+      try {
+        await axios.post(
+          `http://localhost:3000/Controllers/solicitarCartao/${userInfo.data.id}`,
+          formData,
+          { headers: { "Content-Type": "multipart/form-data" } }
+        );
+        setMessage("Solicitação de cartão enviada com sucesso!");
+        setError("");
+        setFile(null);
+        setTipo("");
+      } catch (err) {
+        setError("Erro ao enviar a solicitação.");
+        setMessage("");
+        console.error(err);
+      }
+    };
+    {/*const handleSubmit = async (e) => { // cria o cartão
         e.preventDefault()
         await axios.post("http://localhost:3000/Controllers/createCartao", {
             dataCriacao: dataCriacao(),
@@ -47,7 +91,7 @@ const CriarCartao = () => {
               window.location.reload()
             }
         })
-    }
+    }*/}
 
     const handleDeposit = () => {
       window.location.reload()
@@ -116,19 +160,31 @@ const CriarCartao = () => {
     <div className="relative flex justify-center mb-4">
       <select 
         className="font-inter bg-white text-black py-2 px-4 border-4 border-green-100 rounded-md cursor-pointer text-base transition-colors duration-200 focus:outline-none"
-        onChange={(e) => setTipo(e.target.value)}
+        onChange={handleTipoChange}
         required  
       >
         <option value="" defaultValue hidden>
           Selecionar Opção
         </option>
-        <option value="Usuário">Usuário</option>
-        <option value="Escolar">Escolar</option>
-        <option value="Sênior">Sênior</option>
-        <option value="Especial">Especial</option>
+        <option value="01">Usuário</option>
+        <option value="02">Escolar</option>
+        <option value="03">Sênior</option>
+        <option value="04">Especial</option>
       </select>
     </div>
-    <p className="text-white font-normal font-inter text-2xl drop-shadow-md">
+    <label htmlFor="file" className="text-white font-normal font-inter text-2xl mb-4 drop-shadow-md">
+            Arquivo PDF:
+          </label>
+          <input
+            type="file"
+            id="file"
+            name="file"
+            accept=".pdf"
+            onChange={handleFileChange}
+            className="w-64 font-inter bg-white text-black py-2 px-4 border-4 border-green-100 rounded-md mb-6 cursor-pointer text-base transition-colors duration-200 focus:outline-none"
+            required
+          />
+    {/*<p className="text-white font-normal font-inter text-2xl drop-shadow-md">
       Adicione um valor: *
     </p>
     <p className="text-gray-300 font-normal font-inter text-sm italic mb-4 drop-shadow-md">
@@ -138,8 +194,8 @@ const CriarCartao = () => {
       type="number"
       step=".01"
       className="font-inter bg-white text-black py-2 border-4 border-green-100 rounded-md text-base mb-5 transition-colors duration-200 focus:outline-none"
-      onChange={(e) => setValor(e.target.value)}
-    />
+      onChange={handleFileChange}
+    />*/}
 
     <button 
       type="submit"
@@ -152,6 +208,11 @@ const CriarCartao = () => {
 </div>
 </div>
 </div>
+
+{message && (
+          <div className="mt-4 text-green-500 text-center">{message}</div>
+        )}
+        {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
 
 {depositar && (
           <div className="fixed inset-0 bg-green-100 bg-opacity-60 p-8 flex items-center justify-center overflow-y-auto z-50">
