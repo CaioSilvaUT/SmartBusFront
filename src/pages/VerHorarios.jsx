@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import historico_icon from "../assets/historico-icon.png";
-import terminal_utf from "../assets/terminal-utf.png";
 import utf_terminal from "../assets/utf-terminal.png";
+import terminal_utf from "../assets/terminal-utfpr.png";
 import homeBackground from "../assets/home-background.png";
 
 const VerHorarios = () => {
