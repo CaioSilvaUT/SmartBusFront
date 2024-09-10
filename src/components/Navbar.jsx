@@ -76,6 +76,15 @@ const Navbar = () => {
                 <NavLink to="/cartao" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Cartão</NavLink>
                 <NavLink to="/historico" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Histórico</NavLink>
                 <NavLink to="/avisos" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Avisos</NavLink>
+
+                {userInfo.data.is_adm && (
+                  <>
+                    <span className="border-l border-white h-6"></span>
+                    <NavLink to="/gerenciarnotificacao" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Gerenciar Notificação</NavLink>
+                    <NavLink to="/gerenciarsolicitacao" className={({isActive }) => isActive ? 'text-white font-semibold bg-green-400 rounded p-2 shadow-md' : 'text-white font-semibold hover:text-green-300 p-2'}>Gerenciar Solicitação</NavLink>
+                  </>
+                )}
+
                 <span className="border-l border-white h-6"></span>
                 
                 <div className="relative inline-block">
@@ -91,9 +100,9 @@ const Navbar = () => {
                   {dropdown && (
                     <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg z-10">
                       <div className="border-b-2 border-green-300 px-4 py-3 text-black">
-                      <div>Olá, {resData.nome}</div>
-                      <div className="font-medium truncate">{resData.email}</div>
-                    </div>
+                        <div>Olá, {resData.nome}</div>
+                        <div className="font-medium truncate">{resData.email}</div>
+                      </div>
                       <NavLink to="/perfil" className="block px-4 py-2 text-black hover:bg-gray-200">Perfil</NavLink>
                       <button
                         onClick={logoutHandle}
