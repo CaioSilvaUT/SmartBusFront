@@ -16,7 +16,6 @@ import Cartao from "./pages/Cartao";
 import ListarNotificacoes from "./pages/ListarNotificacoes";
 import GerenciarNotificacao from "./pages/GerenciarNotificacao";
 import GerenciarSolicitacao from "./pages/GerenciarSolicitacao";
-import SolicitarCartao from "./pages/SolicitarCartao";
 import Historico from "./pages/Historico";
 const router = createBrowserRouter([
   {
