@@ -1,6 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import { useEffect } from "react";
 import axios from "axios";
 import icon_icon from "../assets/icon_icon.png";
 import qr_code from "../assets/qr-code.png";
@@ -28,7 +27,6 @@ const VisualizarCartao = () => {
         }
       )
       .then((res) => {
-        console.log(res);
         setResData(res.data);
       })
       .catch((err) => console.log(err));
@@ -41,14 +39,10 @@ const VisualizarCartao = () => {
       .post(
         `http://localhost:3000/Controllers/adicionarSaldo/${userInfo.data.id}`,
         {
-          params: {
-            idUser: userInfo.data.id,
-          },
           valorAdicionado: valor,
         }
       )
       .then((res) => {
-        console.log(res);
         setPagamento(false);
         window.location.reload();
       })
@@ -69,7 +63,6 @@ const VisualizarCartao = () => {
         },
       })
       .then((res) => {
-        console.log(res);
         setResDataUser(res.data);
       })
       .catch((err) => console.log(err));
@@ -79,6 +72,20 @@ const VisualizarCartao = () => {
     setRenovar(false);
     setDepositar(false);
     setPagamento(false);
+  };
+
+  // Função para obter a descrição do tipo
+  const getTipoTexto = (tipo) => {
+    switch (tipo) {
+      case 0:
+        return "Estudante";
+      case 1:
+        return "Comum";
+      case 2:
+        return "Idoso";
+      default:
+        return "Tipo desconhecido";
+    }
   };
 
   return (
@@ -124,7 +131,7 @@ const VisualizarCartao = () => {
               <div className="flex justify-between items-center bg-white p-5 rounded-md shadow-md">
                 <p className="font-bold font-inter text-green-400">Tipo:</p>
                 <div className="text-gray-800 font-inter text-lg font-medium italic">
-                  {resData.tipo}
+                  {getTipoTexto(resData.tipo)}
                 </div>
               </div>
               <div className="flex justify-between items-center bg-white p-5 rounded-md shadow-md">
@@ -138,13 +145,15 @@ const VisualizarCartao = () => {
                   Data da criação:
                 </p>
                 <div className="text-gray-800 font-inter text-lg font-medium italic">
-                  {new Date(resData.dataCriacao).toLocaleString("pt-BR", {
+                  {new Date(resData.dataCriacao).toLocaleDateString("pt-BR", {
                     day: "2-digit",
                     month: "2-digit",
                     year: "numeric",
+                  })}{" "}
+                  às{" "}
+                  {new Date(resData.dataCriacao).toLocaleTimeString("pt-BR", {
                     hour: "2-digit",
                     minute: "2-digit",
-                    hour12: false,
                   })}
                 </div>
               </div>
@@ -153,14 +162,22 @@ const VisualizarCartao = () => {
                   Data de vencimento:
                 </p>
                 <div className="text-gray-800 font-inter text-lg font-medium italic">
-                  {new Date(resData.dataCriacao).toLocaleString("pt-BR", {
-                    day: "2-digit",
-                    month: "2-digit",
-                    year: "numeric",
-                    hour: "2-digit",
-                    minute: "2-digit",
-                    hour12: false,
-                  })}
+                  {new Date(resData.dataVencimento).toLocaleDateString(
+                    "pt-BR",
+                    {
+                      day: "2-digit",
+                      month: "2-digit",
+                      year: "numeric",
+                    }
+                  )}{" "}
+                  às{" "}
+                  {new Date(resData.dataVencimento).toLocaleTimeString(
+                    "pt-BR",
+                    {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    }
+                  )}
                 </div>
               </div>
             </div>
@@ -196,9 +213,7 @@ const VisualizarCartao = () => {
               type="number"
               step=".01"
               placeholder="Valor"
-              onChange={(e) => {
-                setValor(e.target.value);
-              }}
+              onChange={(e) => setValor(e.target.value)}
               className="w-full mb-2 py-1 px-4 border-2 mb-3 border-grey rounded-lg bg-transparent text-grey focus:outline-none focus:ring-2 focus:ring-green-200"
             />
             <label
@@ -208,9 +223,7 @@ const VisualizarCartao = () => {
               Escolha a forma de pagamento:
             </label>
             <select
-              onChange={(e) => {
-                setPagamento(e.target.value);
-              }}
+              onChange={(e) => setPagamento(e.target.value)}
               className="w-full mb-5 py-1 px-4 border-2 border-grey rounded-lg bg-transparent text-grey focus:outline-none focus:ring-2 focus:ring-green-200"
               required
             >
@@ -259,16 +272,20 @@ const VisualizarCartao = () => {
             </h2>
             <p className="font-inter font-semibold text-black mb-1">
               Sua carteirinha vence dia{" "}
-              <p className="font-inter font-semibold text-red-500 mb-1 inline">
-                {resData.dataVencimento}.
-              </p>{" "}
-              Se necessário, renove-a automaticamente clicando abaixo
+              <span className="font-inter font-semibold text-red-500 mb-1">
+                {new Date(resData.dataVencimento).toLocaleDateString("pt-BR", {
+                  day: "2-digit",
+                  month: "2-digit",
+                  year: "numeric",
+                })}
+              </span>
+              . Se necessário, renove-a automaticamente clicando abaixo
             </p>
             <p className="font-inter text-grey italic mb-3">
               Nova data de vencimento após a renovação:{" "}
-              <p className="font-inter italic text-red-500 mb-3 inline">
+              <span className="font-inter italic text-red-500 mb-3 inline">
                 novadata
-              </p>
+              </span>
             </p>
             <button
               onClick={handleUpdate}
