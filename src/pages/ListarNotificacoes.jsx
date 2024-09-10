@@ -15,6 +15,10 @@ const ListarNotificacoes = () => {
       );
       setNotificacoes(response.data);
     } catch (err) {
+      if (err.response && err.response.status === 404) {
+      } else {
+        setError("Erro ao buscar Notificações.");
+      }
       console.error(err);
     }
   };
