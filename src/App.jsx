@@ -36,7 +36,6 @@ const router = createBrowserRouter([
           { path: "/cartao", element: <Cartao /> },
           { path: "/avisos", element: <ListarNotificacoes /> },
           { path: "/historico", element: <Historico /> },
-          { path: "/solicitarcartao", element: <SolicitarCartao /> },
           { path: "/gerenciarnotificacao", element: <GerenciarNotificacao /> },
           { path: "/gerenciarsolicitacao", element: <GerenciarSolicitacao /> },
         ],
