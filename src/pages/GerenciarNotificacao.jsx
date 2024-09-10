@@ -108,7 +108,6 @@ const GerenciarNotificacoes = () => {
           <table className="w-full bg-white rounded-lg shadow-md">
             <thead>
               <tr className="bg-green-400 text-white">
-                <th className="p-4">ID</th>
                 <th className="p-4">Texto</th>
                 <th className="p-4">Data e Hora</th>
                 <th className="p-4">Ações</th>
@@ -117,7 +116,6 @@ const GerenciarNotificacoes = () => {
             <tbody>
               {notificacoes.map((notif) => (
                 <tr key={notif.id}>
-                  <td className="p-4">{notif.id}</td>
                   <td className="p-4">{notif.texto}</td>
                   <td className="p-4">
                     {new Date(notif.dataHora).toLocaleString()}

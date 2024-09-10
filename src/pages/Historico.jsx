@@ -15,8 +15,11 @@ const HistoricoViagens = () => {
         );
         setHistorico(response.data.historicoViagens);
       } catch (err) {
-        console.error("Erro ao buscar histórico de viagens:", err);
-        setError("Erro ao buscar histórico de viagens.");
+        if (err.response && err.response.status === 404) {
+        } else {
+          if (err.response.status == 500)
+            setError("Erro ao buscar histórico de viagens.");
+        }
       }
     };
 
@@ -39,18 +42,27 @@ const HistoricoViagens = () => {
             <table className="w-full bg-white rounded-lg shadow-md">
               <thead>
                 <tr className="bg-green-400 text-white">
-                  <th className="p-4">ID</th>
                   <th className="p-4">Data</th>
-                  <th className="p-4">Descrição</th>
+                  <th className="p-4">Origem</th>
+                  <th className="p-4">Destino</th>
                   <th className="p-4">Valor</th>
                 </tr>
               </thead>
               <tbody>
                 {historico.map((viagem) => (
                   <tr key={viagem.id}>
-                    <td className="p-4">{viagem.id}</td>
-                    <td className="p-4">{viagem.data}</td>
-                    <td className="p-4">{viagem.descricao}</td>
+                    <td className="p-4">
+                      {new Date(viagem.data_viagem).toLocaleString("pt-BR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                        hour12: false,
+                      })}
+                    </td>
+                    <td className="p-4">{viagem.origem}</td>
+                    <td className="p-4">{viagem.destino}</td>
                     <td className="p-4">{viagem.valor}</td>
                   </tr>
                 ))}
