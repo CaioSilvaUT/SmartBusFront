@@ -3,6 +3,7 @@ import { useSelector } from "react-redux";
 import icon_icon from "../assets/icon_icon.png";
 import qr_code from "../assets/qr-code.png";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const CriarCartao = () => {
   const [resData, setResData] = useState("");
@@ -11,27 +12,11 @@ const CriarCartao = () => {
   const [tipo, setTipo] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
-
   const [pagamento, setPagamento] = useState("");
   const [depositar, setDepositar] = useState(false);
-
   const [valor, setValor] = useState("");
 
-  function dataCriacao() {
-    const today = new Date();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const date = today.getDate();
-    return `${date}/${month}/${year}`;
-  }
-
-  function dataVencimento() {
-    const today = new Date();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear() + 1;
-    const date = today.getDate();
-    return `${date}/${month}/${year}`;
-  }
+  const navigate = useNavigate(); // Hook useNavigate para redirecionamento
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
@@ -59,40 +44,60 @@ const CriarCartao = () => {
     formData.append("tipo", tipo);
 
     try {
-      await axios.post(
+      const response = await axios.post(
         `http://localhost:3000/Controllers/solicitarCartao/${userInfo.data.id}`,
         formData,
         { headers: { "Content-Type": "multipart/form-data" } }
       );
-      setMessage("Solicitação de cartão enviada com sucesso!");
-      setError("");
-      setFile(null);
-      setTipo("");
+
+      if (response.status === 201) {
+        // Define a mensagem de sucesso e limpa os campos
+        setMessage(
+          response.data.message || "Solicitação de cartão enviada com sucesso!"
+        );
+        setError("");
+        setFile(null);
+        setTipo("");
+
+        // Delay de 2 segundos antes de redirecionar
+        setTimeout(() => {
+          navigate("/home");
+        }, 2000);
+      }
     } catch (err) {
-      setError("Erro ao enviar a solicitação.");
+      if (err.response) {
+        // Resposta do servidor está disponível
+        switch (err.response.status) {
+          case 400:
+            // Erro do cliente (ex.: solicitação inválida)
+            setError(
+              err.response.data.error || "Você já possui uma solicitação."
+            );
+            break;
+          case 500:
+            // Erro interno do servidor
+            setError("Erro ao Salvar . Tente novamente mais tarde.");
+            break;
+          default:
+            // Outros erros
+            setError("Ocorreu um erro inesperado. Tente novamente.");
+            break;
+        }
+      } else if (err.request) {
+        // Solicitação foi feita, mas sem resposta
+        setError(
+          "Não foi possível se conectar ao servidor. Verifique sua conexão."
+        );
+      } else {
+        // Algo deu errado ao configurar a solicitação
+        setError("Erro ao configurar a solicitação.");
+      }
+
+      // Limpa a mensagem de sucesso
       setMessage("");
       console.error(err);
     }
   };
-  {
-    /*const handleSubmit = async (e) => { // cria o cartão
-        e.preventDefault()
-        await axios.post("http://localhost:3000/Controllers/createCartao", {
-            dataCriacao: dataCriacao(),
-            dataVencimento: dataVencimento(),
-            tipo: tipo,
-            valor: valor,  
-            idUser: userInfo.data.id
-        }).then((res) => {
-            console.log(res)
-            if(parseFloat(valor) !== 0){ 
-              setDepositar(true)
-            } else {
-              window.location.reload()
-            }
-        })
-    }*/
-  }
 
   const handleDeposit = () => {
     window.location.reload();
@@ -198,18 +203,6 @@ const CriarCartao = () => {
                   className="w-64 font-inter bg-white text-black py-2 px-4 border-4 border-green-100 rounded-md mb-6 cursor-pointer text-base transition-colors duration-200 focus:outline-none"
                   required
                 />
-                {/*<p className="text-white font-normal font-inter text-2xl drop-shadow-md">
-      Adicione um valor: *
-    </p>
-    <p className="text-gray-300 font-normal font-inter text-sm italic mb-4 drop-shadow-md">
-      * Se não quiser depositar o valor por enquanto, insira "0" no campo abaixo
-    </p>
-    <input
-      type="number"
-      step=".01"
-      className="font-inter bg-white text-black py-2 border-4 border-green-100 rounded-md text-base mb-5 transition-colors duration-200 focus:outline-none"
-      onChange={handleFileChange}
-    />*/}
 
                 <button
                   type="submit"
@@ -223,10 +216,19 @@ const CriarCartao = () => {
         </div>
       </div>
 
-      {message && (
-        <div className="mt-4 text-green-500 text-center">{message}</div>
-      )}
-      {error && <div className="mt-4 text-red-500 text-center">{error}</div>}
+      {/* Mensagens de Sucesso e Erro */}
+      <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-30">
+        {message && (
+          <div className="bg-green-500 text-white px-6 py-3 rounded-md shadow-lg mb-4">
+            {message}
+          </div>
+        )}
+        {error && (
+          <div className="bg-red-500 text-white px-6 py-3 rounded-md shadow-lg mb-4">
+            {error}
+          </div>
+        )}
+      </div>
 
       {depositar && (
         <div className="fixed inset-0 bg-green-100 bg-opacity-60 p-8 flex items-center justify-center overflow-y-auto z-50">
@@ -244,35 +246,18 @@ const CriarCartao = () => {
               onChange={(e) => {
                 setPagamento(e.target.value);
               }}
-              className="w-full mb-5 py-1 px-4 border-2 border-grey rounded-lg bg-transparent text-grey focus:outline-none focus:ring-2 focus:ring-green-200"
-              required
+              className="w-full mb-5 py-1 px-4 border-2 border-grey rounded-lg bg-transparent text-grey focus:outline-none focus:ring-2 focus:ring-green-300"
+              id="Valoracolocar"
             >
-              <option value="Cartão de Débito">Cartão de Débito</option>
-              <option value="Cartão de Crédito">Cartão de Crédito</option>
-              <option value="Boleto">Boleto</option>
+              <option value="Credito">Cartão de Crédito</option>
+              <option value="Debito">Cartão de Débito</option>
               <option value="Pix">Pix</option>
             </select>
-            {pagamento === "Pix" && (
-              <div className="flex items-start mt-5 mb-4">
-                <img src={qr_code} alt="QR Code de Pix" className="w-40 mb-4" />
-                <div className="ml-6">
-                  <h3 className="font-inter font-bold mb-2 italic">
-                    Instruções para pagamento
-                  </h3>
-                  <ul className="list-disc ml-5 font-inter font-grey italic text-sm">
-                    <li>Acesse o aplicativo do seu banco em seu celular</li>
-                    <li>Clique na opção de pagar via Pix</li>
-                    <li>Escaneie o QR Code exibido ao lado</li>
-                    <li>Confira os dados e confirme o pagamento</li>
-                  </ul>
-                </div>
-              </div>
-            )}
             <button
+              className="px-8 py-2 bg-green-400 text-white font-semibold font-inter rounded-md shadow-md hover:bg-green-300"
               onClick={handleDeposit}
-              className="bg-transparent font-bold font-inter text-green-400 py-1 px-4 border-2 border-grey rounded-lg hover:text-white hover:bg-green-400 transition duration-300"
             >
-              Confirmar pagamento
+              Depositar
             </button>
           </div>
         </div>
