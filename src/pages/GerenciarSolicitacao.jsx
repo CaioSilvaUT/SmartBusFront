@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useAdminRedirect from "../components/useAdminRedirect";
 
 const GerenciarSolicitacao = () => {
   const [solicitacoes, setSolicitacoes] = useState([]);
   const [error, setError] = useState(null);
   const { userInfo } = useSelector((state) => state.auth);
-
+  useAdminRedirect();
   // Função para buscar as solicitações pendentes
   const fetchSolicitacoesPendentes = async () => {
     try {

@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
+import useAdminRedirect from "../components/useAdminRedirect";
 
 const GerenciarNotificacoes = () => {
   const [notificacoes, setNotificacoes] = useState([]);
   const [texto, setTexto] = useState("");
   const [error, setError] = useState(null);
   const { userInfo } = useSelector((state) => state.auth);
-
+  useAdminRedirect();
   // Função para buscar todas as notificações
   const fetchNotificacoes = async () => {
     try {
